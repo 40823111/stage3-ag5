@@ -123,7 +123,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='Introduction.html'>Introduction</a><li class='has-children'><a href='Stage1,2.html'>Stage1,2</a><ul class='dropdown'><li class='has-children'><a href='stage1.html'>stage1</a><ul class='dropdown'><li><a href='stage2.html'>stage2</a></li></li></ul></ul><li class='has-children'><a href='week.html'>week</a><ul class='dropdown'><li class='has-children'><a href='w10.html'>w10</a><ul class='dropdown'><li><a href='task1.html'>task1</a><li><a href='task2.html'>task2</a></li></ul><li class='has-children'><a href='w11.html'>w11</a><ul class='dropdown'><li><a href='task3.html'>task3</a></li></ul><li><a href='w12.html'>w12</a><li><a href='w13.html'>w13</a></li>
+                     <li><a href='Introduction.html'>Introduction</a><li class='has-children'><a href='Stage1,2.html'>Stage1,2</a><ul class='dropdown'><li class='has-children'><a href='stage1.html'>stage1</a><ul class='dropdown'><li><a href='stage2.html'>stage2</a></li></li></ul></ul><li class='has-children'><a href='week.html'>week</a><ul class='dropdown'><li class='has-children'><a href='w10.html'>w10</a><ul class='dropdown'><li><a href='task1.html'>task1</a><li><a href='task2.html'>task2</a></li></ul><li class='has-children'><a href='w11.html'>w11</a><ul class='dropdown'><li><a href='task3.html'>task3</a></li></ul><li><a href='w12.html'>w12</a><li><a href='w13.html'>w13</a><li><a href='w14.html'>w14</a><li><a href='w15.html'>w15</a><li><a href='w16.html'>w16</a></li>
                       </ul>
                 </nav>
               </div>
@@ -137,7 +137,25 @@ img.add_border {
     <div id="tipue_search_content">w10 << <a href='w10.html'>Previous</a> <a href='task2.html'>Next</a> >> task2<br /><h1>task1</h1>
 <p><span>讀取 stage3_2a.txt, 建立 Stage3 的分組倉儲, 分組網頁, 以及各組員倉儲及網頁連結.</span></p>
 <p><span></span></p>
-<p></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">with open("stage3_2a.txt") as gp:
+    # readlines will read into the whole line and put into list format
+    # has \n at the end of each line
+    data = gp.readlines()
+    data = [d.replace('4823122','40823122') for d in data]
+    data = [v.replace('\t\t\t\t','') for v in data]
+#print(len(data))
+for p in range(len(data)):
+    group = data[p].rstrip("\n").split("\t")
+    print('&lt;p&gt;'+group[0]+' | &lt;a href="https://'+group[1]+'.github.io/stage3-ag'+group[0][9]+'"&gt;網站&lt;/a&gt;  &lt;a href="https://github.com/'+group[2]+'/stage3-ag'+group[0][9]+'"&gt;倉儲&lt;/a&gt;&lt;/p&gt;')
+    for  q in range(2,18,2):
+        try:
+              print('&lt;p&gt;'+group[q]+' | Website:'+'&lt;a href="https://'+group[q]+'.github.io/cd2021'+'"&gt;'+group[q]+'&lt;/a&gt;'+' | Repository:'+'&lt;a href="https://github.com/'+group[q]+'/cd2021'+'"&gt;'+group[q]+'&lt;/a&gt;'+' | Group Website:'+'&lt;a href="https://'+group[q]+'.github.io/stage3-ag'+group[0][9]+'"&gt;'+group[q]+'&lt;/a&gt;&lt;/p&gt;' )
+        except:
+            continue
+            
+
+</pre>
+<p><br/><span></span></p>
 <br />w10 << <a href='w10.html'>Previous</a> <a href='task2.html'>Next</a> >> task2</div>
         
     <!-- footer -->
