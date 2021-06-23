@@ -134,14 +134,122 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">task3-1 << <a href='task3-1.html'>Previous</a> <a href='w13.html'>Next</a> >> w13<br /><h1>w12</h1>
-<p><span>第二次 直播抽到組員 40823115 40823126</span></p>
-<p><span>1. 40823115  </span>介紹pelican和reveal</p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/UjbTUvps2ws" title="YouTube video player" width="560"></iframe></p>
-<p><span></span></p>
-<p>2.40823126 介紹 soildworks繪圖</p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/HXmGJbcdTNI" title="YouTube video player" width="560"></iframe></p>
-<br />task3-1 << <a href='task3-1.html'>Previous</a> <a href='w13.html'>Next</a> >> w13</div>
+    <div id="tipue_search_content">FINAL << <a href='FINAL.html'>Previous</a> <a href='40823128.html'>Next</a> >> 40823128<br /><h1>40823124</h1>
+<p>part2 測試轉動 </p>
+<p><img caption="false" height="508" src="./../images/w16_1.gif" width="1000"/></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">-- just test joints turning by 40823124
+function moving1()
+
+    sim.setJointTargetPosition(joint1,45*math.pi/180)
+    sim.setJointTargetPosition(joint2,-45*math.pi/180)
+
+    
+end
+function moving2()
+
+    sim.setJointTargetPosition(joint1,-45*math.pi/180)
+    sim.setJointTargetPosition(joint2,45*math.pi/180)
+
+    
+end
+
+
+function sysCall_threadmain()
+    
+    t=5
+    joint1=sim.getObjectHandle('joint1')
+    joint2=sim.getObjectHandle('joint2')
+    sim.setJointTargetPosition(joint1,0)
+    sim.setJointTargetPosition(joint2,0)
+
+    sim.wait(t)
+    while sim.getSimulationState()~=sim.simulation_advancing_abouttostopre do
+        moving1()
+        sim.wait(t)
+        moving2()
+        sim.wait(t)
+        sim.setJointTargetPosition(joint1,0)
+        sim.setJointTargetPosition(joint2,0)
+        sim.wait(t)
+    end
+
+end
+</pre>
+<p></p>
+<p>part3 按鍵轉動 -40823124</p>
+<p><img caption="false" height="508" src="./../images/w16_2.gif" width="1000"/></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">--by 40823124 key press test
+
+function sysCall_init() 
+    b1=sim.getObjectHandle('joint1')
+    m1=sim.getObjectHandle('joint2')
+    s1=sim.getObjectHandle('joint4')
+    suctionPad=sim.getObjectHandle('suctionPad')
+    BaseFrame=sim.getObjectHandle("BaseFrame")
+    block =sim.getObjectHandle("BOX")
+    r1 = 0
+    r2 = 0
+    d3 = 0
+    deg = math.pi/180
+end
+function sysCall_actuation() 
+
+    message, auxiliaryData=sim.getSimulatorMessage()
+        while message ~= -1 do
+            key=auxiliaryData[1]
+            if (message==sim.message_keypress) then
+                if (auxiliaryData[1]==101) then 
+                    --press e to open the suctionpad
+sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','true')
+                end 
+                
+                if (auxiliaryData[1]==113) then 
+                    --press q to close the suctionpad
+sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','false')
+                end 
+                
+                if (auxiliaryData[1]==068) then 
+                    --press D to turn joint1
+                     r1 = r1 + 5*deg
+                     sim.setJointPosition(b1, r1)
+                end 
+                if (auxiliaryData[1]==065) then 
+                    --press A to turn joint1
+                     r1 = r1  - 5*deg
+                     sim.setJointPosition(b1, r1)
+                end 
+                if (auxiliaryData[1]==100) then 
+                    --press d to turn joint2
+                     r2 = r2 + 5*deg
+                     sim.setJointPosition(m1, r2)
+                end 
+                if (auxiliaryData[1]==097) then 
+                    -- press a to turn joint2
+                     r2 = r2 - 5*deg
+                     sim.setJointPosition(m1, r2)
+                end 
+                if (auxiliaryData[1]==119) then 
+                    --press s to control joint4
+                     d3 =-0.058
+                     sim.setJointPosition(s1, d3)
+                end 
+                if (auxiliaryData[1]==115) then 
+                    --press w to control joint4
+                     sim.setJointPosition(s1, 0)
+                end 
+                
+           end  
+    message, auxiliaryData=sim.getSimulatorMessage()
+        end 
+end 
+</pre>
+<p></p>
+<p>part4 lua自動執行 -40823124</p>
+<p><img caption="false" height="508" src="./../images/w16_4.gif" width="1000"/></p>
+<script src="https://gist.github.com/40823124/de555eda2fe5d61639c6c76c26c16007.js"></script>
+<p>&gt;&gt;&gt;&gt;&gt;&gt;&gt; ba3417913a9ac1e0268b21e7fe352c217a93570a</p>
+<p></p>
+<br />FINAL << <a href='FINAL.html'>Previous</a> <a href='40823128.html'>Next</a> >> 40823128</div>
         
     <!-- footer -->
       <div class="container">
