@@ -123,7 +123,7 @@ img.add_border {
                             <li><a href="./../blog/index.html">blog</a></li>
                         </ul>
                       </li>
-                     <li><a href='Introduction.html'>Introduction</a><li class='has-children'><a href='Stage1,2.html'>Stage1,2</a><ul class='dropdown'><li class='has-children'><a href='stage1.html'>stage1</a><ul class='dropdown'><li><a href='stage2.html'>stage2</a></li></li></ul></ul><li class='has-children'><a href='week.html'>week</a><ul class='dropdown'><li class='has-children'><a href='w10.html'>w10</a><ul class='dropdown'><li><a href='task1.html'>task1</a><li><a href='task2.html'>task2</a></li></ul><li class='has-children'><a href='w11.html'>w11</a><ul class='dropdown'><li><a href='task3.html'>task3</a></li></ul><li><a href='w12.html'>w12</a><li><a href='w13.html'>w13</a><li><a href='w14.html'>w14</a><li><a href='w15.html'>w15</a><li><a href='w16.html'>w16</a></li>
+                     <li><a href='Introduction.html'>Introduction</a><li class='has-children'><a href='Stage1,2.html'>Stage1,2</a><ul class='dropdown'><li class='has-children'><a href='stage1.html'>stage1</a><ul class='dropdown'><li><a href='stage2.html'>stage2</a></li></li></ul></ul><li class='has-children'><a href='week.html'>week</a><ul class='dropdown'><li class='has-children'><a href='w10.html'>w10</a><ul class='dropdown'><li><a href='task1.html'>task1</a><li><a href='task2.html'>task2</a><li><a href='task3-1.html'>task3-1</a></li></ul><li class='has-children'><a href='w11.html'>w11</a><ul class='dropdown'><li><a href='task3-2.html'>task3-2</a></li></ul><li><a href='w12.html'>w12</a><li><a href='w13.html'>w13</a><li><a href='w14.html'>w14</a><li><a href='w15.html'>w15</a><li><a href='w16.html'>w16</a></li>
                       </ul>
                 </nav>
               </div>
@@ -136,7 +136,118 @@ img.add_border {
         </header>
     <div id="tipue_search_content">w15 << <a href='w15.html'>Previous</a> <br /><h1>w16</h1>
 <p><a href="https://40823111.github.io/cd2021/content/w16.html">期末考試了</a></p>
-<p></p><br />w15 << <a href='w15.html'>Previous</a> </div>
+<p>part2 測試轉動 -40823124</p>
+<p><img caption="false" height="508" src="./../images/w16_1.gif" width="1000"/></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">-- just test joints turning by 40823124
+function moving1()
+
+    sim.setJointTargetPosition(joint1,45*math.pi/180)
+    sim.setJointTargetPosition(joint2,-45*math.pi/180)
+
+    
+end
+function moving2()
+
+    sim.setJointTargetPosition(joint1,-45*math.pi/180)
+    sim.setJointTargetPosition(joint2,45*math.pi/180)
+
+    
+end
+
+
+function sysCall_threadmain()
+    
+    t=5
+    joint1=sim.getObjectHandle('joint1')
+    joint2=sim.getObjectHandle('joint2')
+    sim.setJointTargetPosition(joint1,0)
+    sim.setJointTargetPosition(joint2,0)
+
+    sim.wait(t)
+    while sim.getSimulationState()~=sim.simulation_advancing_abouttostopre do
+        moving1()
+        sim.wait(t)
+        moving2()
+        sim.wait(t)
+        sim.setJointTargetPosition(joint1,0)
+        sim.setJointTargetPosition(joint2,0)
+        sim.wait(t)
+    end
+
+end
+</pre>
+<p></p>
+<p>part3 按鍵轉動 -40823124</p>
+<p><img caption="false" height="508" src="./../images/w16_2.gif" width="1000"/></p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">--by 40823124 key press test
+
+function sysCall_init() 
+    b1=sim.getObjectHandle('joint1')
+    m1=sim.getObjectHandle('joint2')
+    s1=sim.getObjectHandle('joint4')
+    suctionPad=sim.getObjectHandle('suctionPad')
+    BaseFrame=sim.getObjectHandle("BaseFrame")
+    block =sim.getObjectHandle("BOX")
+    r1 = 0
+    r2 = 0
+    d3 = 0
+    deg = math.pi/180
+end
+function sysCall_actuation() 
+
+    message, auxiliaryData=sim.getSimulatorMessage()
+        while message ~= -1 do
+            key=auxiliaryData[1]
+            if (message==sim.message_keypress) then
+                if (auxiliaryData[1]==101) then 
+                    --press e to open the suctionpad
+sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','true')
+                end 
+                
+                if (auxiliaryData[1]==113) then 
+                    --press q to close the suctionpad
+sim.setScriptSimulationParameter(sim.getScriptAssociatedWithObject(suctionPad),'active','false')
+                end 
+                
+                if (auxiliaryData[1]==068) then 
+                    --press D to turn joint1
+                     r1 = r1 + 5*deg
+                     sim.setJointPosition(b1, r1)
+                end 
+                if (auxiliaryData[1]==065) then 
+                    --press A to turn joint1
+                     r1 = r1  - 5*deg
+                     sim.setJointPosition(b1, r1)
+                end 
+                if (auxiliaryData[1]==100) then 
+                    --press d to turn joint2
+                     r2 = r2 + 5*deg
+                     sim.setJointPosition(m1, r2)
+                end 
+                if (auxiliaryData[1]==097) then 
+                    -- press a to turn joint2
+                     r2 = r2 - 5*deg
+                     sim.setJointPosition(m1, r2)
+                end 
+                if (auxiliaryData[1]==119) then 
+                    --press s to control joint4
+                     d3 =-0.058
+                     sim.setJointPosition(s1, d3)
+                end 
+                if (auxiliaryData[1]==115) then 
+                    --press w to control joint4
+                     sim.setJointPosition(s1, 0)
+                end 
+                
+           end  
+    message, auxiliaryData=sim.getSimulatorMessage()
+        end 
+end 
+</pre>
+<p></p>
+<p>part4 lua自動執行 -40823124</p>
+<p><img caption="false" height="508" src="./../images/w16_4.gif" width="1000"/></p>
+<script src="https://gist.github.com/40823124/de555eda2fe5d61639c6c76c26c16007.js"></script><br />w15 << <a href='w15.html'>Previous</a> </div>
         
     <!-- footer -->
       <div class="container">
