@@ -2,7 +2,7 @@
         <head>
         <title>CMSiMDE</title>
         <meta charset="utf-8">
-<meta property="head" content="H3">
+<meta property="head" content="H2">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700,900" rel="stylesheet">
         <link rel="stylesheet" href="./../cmsimde/static/chimper/fonts/icomoon/style.css">
@@ -134,14 +134,111 @@ img.add_border {
           </div>
           
         </header>
-    <div id="tipue_search_content">w11 << <a href='w11.html'>Previous</a> <a href='w12.html'>Next</a> >> w12<br /><h1>task3-1</h1>
-<p><span>每週各組按照組員順序, 於每堂課程時段, 輪流由 2-3 名學員啟動 OBS + Youtube 直播</span></p>
-<p><span>第一次 直播抽到組員 40823111 40823120</span></p>
-<p><span>1.介紹CoppliaSim 的使用方法</span></p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/BaqrJgY4yKA" title="YouTube video player" width="560"></iframe></p>
-<p>2.介紹reveal的創見與撰寫網誌內容</p>
-<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/pPfVa89UqMA" title="YouTube video player" width="560"></iframe></p>
-<br />w11 << <a href='w11.html'>Previous</a> <a href='w12.html'>Next</a> >> w12</div>
+    <div id="tipue_search_content">40823139 << <a href='40823139.html'>Previous</a> <br /><h1>40823111</h1>
+<p></p>
+<p>stage3-ag5 資料統整</p>
+<p></p>
+<p>這物專案我們是以組員<a href="https://40823139.github.io/cd2021/content/index.html">40823139 </a>來改良為主，<span>我們和stage2不同的是把原本複雜的程式縮減成用dummy只要控制 可以大大減少coppliasim 的複雜度</span></p>
+<p><span>場景下載 </span><a href="https://github.com/40823111/cd2021/blob/main/remote%20api/stage3 final.ttt">Stage3-ag1-module.ttt</a> (場景提供 組員40823139)</p>
+<p></p>
+<p>解說</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/B7HNe7f9VNk" title="YouTube video player" width="560"></iframe></p>
+<p>改良後 最終成品</p>
+<p><iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen" frameborder="0" height="315" src="https://www.youtube.com/embed/1kpNmqqGyGI" title="YouTube video player" width="560"></iframe></p>
+<p>這物專案我們是以組員40823139 來改良為主，<span>我們和stage2不同的是把原本複雜的程式縮減成用dummy只要控制 可以大大減少coppliasim 的複雜度</span></p>
+<p></p>
+<p>改良前 (原本有很多複雜的程式)</p>
+<p><img alt="" height="328" src="./../images/old.jpg" width="583"/></p>
+<p></p>
+<p>改良後 (我們把它用dummy取代)</p>
+<p><img alt="" height="320" src="./../images/new.jpg" width="569"/></p>
+<p></p>
+<p>手臂程式</p>
+<pre class="brush:py;auto-links:false;toolbar:false" contenteditable="false">-- This is a threaded script, and is just an example!
+
+function sysCall_threadmain()
+
+    jointHandles={-1,-1,-1,-1,-1,-1}
+    for i=1,6,1 do
+        jointHandles[i]=sim.getObjectHandle('UR3_joint'..i)
+    end
+    
+    while sim.getSimulationState()~=sim.simulation_advancing_abouttostop do
+
+
+    -- Set-up some of the RML vectors:
+    vel=10000 --velocity
+    accel=1000--acceleration
+    jerk=0
+    currentVel={0,0,0,0,0,0,0}
+    currentAccel={0,0,0,0,0,0,0}
+    maxVel={vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180,vel*math.pi/180}
+    maxAccel={accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180,accel*math.pi/180}
+    maxJerk={jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180,jerk*math.pi/180}
+    targetVel={0,0,0,0,0,0}
+
+    targetPos1={150*math.pi/180,108*math.pi/180,-90*math.pi/180,90*math.pi/180,90*math.pi/180,90*math.pi/180}
+    sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos1,targetVel)
+
+    targetPos2={-90*math.pi/180,99*math.pi/180,-30*math.pi/360,-150*math.pi/180,-60*math.pi/180,90*math.pi/180}
+    sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos2,targetVel)
+    
+    targetPos3={0,0,0,0,0,0}
+    sim.rmlMoveToJointPositions(jointHandles,-1,currentVel,currentAccel,maxVel,maxAccel,maxJerk,targetPos3,targetVel)
+    end
+
+end
+</pre>
+<p><br/>心得 &lt;&lt; <a href="/心得.html">Previous</a></p>
+<!-- footer -->
+<div class="container">
+<div class="row pt-3 mx-auto">
+<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> Copyright ©
+<script>
+document.write(new Date().getFullYear());
+</script>
+All rights reserved | This template is made with <i aria-hidden="true" class="icon-heart"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+</div>
+</div>
+<!-- for footer -->
+<p></p>
+<!-- for site wrap -->
+<p></p>
+<!-- <script src="../cmsimde/static/chimper/js/jquery-3.3.1.min.js"></script> -->
+<script src="/cmsimde/static/chimper/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="/cmsimde/static/chimper/js/jquery-ui.js"></script>
+<script src="/cmsimde/static/chimper/js/popper.min.js"></script>
+<script src="/cmsimde/static/chimper/js/bootstrap.min.js"></script>
+<script src="/cmsimde/static/chimper/js/owl.carousel.min.js"></script>
+<script src="/cmsimde/static/chimper/js/jquery.stellar.min.js"></script>
+<script src="/cmsimde/static/chimper/js/jquery.countdown.min.js"></script>
+<script src="/cmsimde/static/chimper/js/jquery.magnific-popup.min.js"></script>
+<script src="/cmsimde/static/chimper/js/bootstrap-datepicker.min.js"></script>
+<script src="/cmsimde/static/chimper/js/aos.js"></script>
+<!--
+            <script src="../cmsimde/static/chimper/js/typed.js"></script>
+                    <script>
+                    var typed = new Typed('.typed-words', {
+                    strings: ["Web Apps"," WordPress"," Mobile Apps"],
+                    typeSpeed: 80,
+                    backSpeed: 80,
+                    backDelay: 4000,
+                    startDelay: 1000,
+                    loop: true,
+                    showCursor: true
+                    });
+                    </script>
+            -->
+<script src="/cmsimde/static/chimper/js/main.js"></script>
+<!-- 啟用 LaTeX equations 編輯 -->
+<p></p>
+<!-- <script>
+  MathJax = {
+    tex: {inlineMath: [['$', '$'], ['\(', '\)']]}
+  };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>-->
+<p></p><br />40823139 << <a href='40823139.html'>Previous</a> </div>
         
     <!-- footer -->
       <div class="container">
